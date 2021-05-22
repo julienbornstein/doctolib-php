@@ -1,35 +1,50 @@
 {
-    "name": "league/:package_name",
-    "description": ":package_description",
+    "name": "julienbornstein/doctolib-php",
+    "description": "Doctolib PHP Client",
+    "type": "library",
     "keywords": [
-        "league",
+        "doctolib",
         "package"
     ],
-    "homepage": "https://github.com/php-loep/:package_name",
+    "homepage": "https://github.com/julienbornstein/doctolib-php",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author_email@example.com",
-            "homepage": "http://author-website.example.com",
+            "name": ":Julien Bornstein",
+            "email": "julien@parisbouge.com",
+            "homepage": "https://www.parisbouge.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php" : ">=5.3.0"
+        "php": ">=7.4",
+        "ext-json": "*",
+        "symfony/http-client": "5.2.*",
+        "symfony/http-foundation": "^5.2",
+        "symfony/options-resolver": "^5.2",
+        "symfony/serializer-pack": "^1.0",
+        "webmozart/assert": "^1.10"
     },
     "require-dev": {
-        "phpunit/phpunit" : "4.*"
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpmd/phpmd": "^2.10",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/phpstan": "^0.12.87",
+        "phpunit/phpunit": "9.*",
+        "symfony/debug-pack": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "League\\Skeleton\\": "src"
+            "Doctolib\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\Skeleton\\Test\\": "tests"
+            "Doctolib\\Test\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {

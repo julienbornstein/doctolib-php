@@ -30,6 +30,16 @@ nb-configuration.xml
 *.sublime-workspace
 
 build
-composer.lock
-docs
 vendor
+
+# PHP Mess Detector
+/phpmd.xml
+
+# PHP Unit
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+
+# PHP-CS-Fixer
+/.php-cs-fixer.php
+/.php-cs-fixer.cache

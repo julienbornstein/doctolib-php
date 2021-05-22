@@ -1,0 +1,48 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict --no-check-publish --ansi
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --ansi
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyze --memory-limit=-1 --ansi
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit --colors=always --coverage-clover=coverage.xml
+
+      - name: Run PHP MD
+        run: vendor/bin/phpmd src text ruleset.xml --suffixes php
+
+      - name: Upload Code Coverage to Codecov.io
+        uses: codecov/codecov-action@v1

@@ -1,46 +1,73 @@
-# League Skeleton
+# Doctolib PHP Client
 
-[![Latest Version](https://img.shields.io/github/release/thephpleague/skeleton.svg?style=flat-square)](https://github.com/thephpleague/skeleton/releases)
+[![Latest Version](https://img.shields.io/github/release/julienbornstein/doctolib-php.svg?style=flat-square)](https://github.com/julienbornstein/doctolib-php/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/thephpleague/skeleton/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/skeleton)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/thephpleague/skeleton.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/skeleton/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/skeleton.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/skeleton)
-[![Total Downloads](https://img.shields.io/packagist/dt/league/skeleton.svg?style=flat-square)](https://packagist.org/packages/league/skeleton)
+[![Build Status](https://img.shields.io/travis/julienbornstein/doctolib-php/master.svg?style=flat-square)](https://travis-ci.org/julienbornstein/doctolib-php)
+[![Total Downloads](https://img.shields.io/packagist/dt/julienbornstein/doctolib-php.svg?style=flat-square)](https://packagist.org/packages/julienbornstein/doctolib-php)
 
-**Note:** Replace `skeleton` with the correct package name in the above URLs, then delete this line.
+**Note:** This is an UNOFFICIAL Doctolib PHP Client.
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+This is a PHP client for [Doctolib](https://www.doctolib.fr/). It includes the following:
 
-## Install
+* Helper methods for REST endpoints:
+  * Search Profiles (Doctor) by Speciality and Location, and get Booking and Availability informations.
+  * Get Patient, Profile, Appointment.
+  * Create, Confirm, Delete an Appointment.
+  * Authentication. *broken*
+* PSR-4 autoloading support.
 
-Via Composer
+## Requirements
+* PHP 7.4 or later.
+* PHP [cURL extension](http://php.net/manual/en/book.curl.php) (Usually included with PHP).
 
-``` bash
-$ composer require league/skeleton
+
+## Installation
+
+Install it using [Composer](https://getcomposer.org/):
+```sh
+$ composer require julienbornstein/doctolib-php
 ```
 
 ## Usage
 
-``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+```php
+$doctolib = new Doctolib\Client();
+$patient = $doctolib->getMasterPatient();
 ```
+
+## Framework integrations
+
+### Symfony
+
+Add this block in your `services.yaml` file to register the `Client` as a service.
+
+```yaml
+    Doctolib\Client:
+      arguments:
+        $serializer: '@doctolib.serializer'
+
+    doctolib.serializer:
+      class: Symfony\Component\Serializer\SerializerInterface
+      factory: ['Doctolib\SerializerFactory', 'create']
+```
+
+## Examples
+
+You can find some examples in the [examples](examples) directory.
 
 ## Testing
 
-``` bash
-$ phpunit
+```sh
+$ make test
 ```
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/:package_name/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/julienbornstein/doctolib-php/blob/master/CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](https://github.com/thephpleague/:package_name/contributors)
+- [Julien Bornstein](https://github.com/julienbornstein)
 
 ## License
 
