@@ -13,7 +13,7 @@ This is a PHP client for [Doctolib](https://www.doctolib.fr/). It includes the f
   * Search Profiles (Doctor) by Speciality and Location, and get Booking and Availability informations.
   * Get Patient, Profile, Appointment.
   * Create, Confirm, Delete an Appointment.
-  * Authentication. *broken*
+  * ~~Authentication.~~ *broken*
 * PSR-4 autoloading support.
 
 ## Requirements
@@ -31,8 +31,41 @@ $ composer require julienbornstein/doctolib-php
 ## Usage
 
 ```php
-$doctolib = new Doctolib\Client();
+$doctolib = new Doctolib\Client(
+    new Symfony\Component\HttpClient\HttpClient(), 
+    SerializerFactory::create()
+);
+
+$searchResults = $doctolib->search('dentiste');
+$speciality = $searchResults['specialities'][0];
+
+$profiles = $doctolib->searchProfilesBySpecialityAndLocation('dentiste', '75009-paris');
+$profiles = $doctolib->searchProfilesBySpecialityAndLocation('dentiste', '75009-paris', [
+    'latitude' => 48.8785328,
+    'longitude' => 2.3377854,
+]);
+
+$booking = $doctolib->getBooking('cabinet-dentaire-haussmann-saint-lazare');
+$agendas = $booking->getAgendas();
+$visitMotives = Agenda::getVisitMotivesForAgendas($agendas);
+
+$tomorrow = new DateTime('tomorrow');
+$visitMotive = $visitMotives[0];
+$availabilities = $doctolib->getAvailabilities($agendas, $tomorrow, $visitMotive->getRefVisitMotiveId());
+
+$firstAvailability = $availabilities[0];
+$firstSlot = $firstAvailability->getSlots()[0];
+
+$doctolib->setSessionId('YOUR_SESSION_ID');
+
 $patient = $doctolib->getMasterPatient();
+
+$appointment = $doctolib->createAppointment($booking, $visitMotive, $firstSlot);
+$appointment = $doctolib->confirmAppointment($appointment, $patient);
+
+$upcomingAppointments = $doctolib->getUpcomingAppointments();
+$appointment = $doctolib->getAppointment('APPOINTMENT_ID');
+$doctolib->deleteAppointment('APPOINTMENT_ID');
 ```
 
 ## Framework integrations
