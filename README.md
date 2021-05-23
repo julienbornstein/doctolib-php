@@ -1,8 +1,8 @@
 # Doctolib PHP Client
 
-[![Latest Version](https://img.shields.io/github/release/julienbornstein/doctolib-php.svg?style=flat-square)](https://github.com/julienbornstein/doctolib-php/releases)
+[![Latest Release](https://img.shields.io/github/release/julienbornstein/doctolib-php.svg?style=flat-square)](https://github.com/julienbornstein/doctolib-php/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/julienbornstein/doctolib-php/master.svg?style=flat-square)](https://travis-ci.org/julienbornstein/doctolib-php)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/julienbornstein/doctolib-php/Continuous%20Integration?style=flat-square)](https://github.com/julienbornstein/doctolib-php/actions/workflows/continuous-integration.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/julienbornstein/doctolib-php.svg?style=flat-square)](https://packagist.org/packages/julienbornstein/doctolib-php)
 
 **Note:** This is an UNOFFICIAL Doctolib PHP Client.
