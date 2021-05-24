@@ -7,6 +7,7 @@ namespace Doctolib\Test;
 use Doctolib\Client;
 use Doctolib\Exception\AuthenticationException;
 use Doctolib\Exception\DataNotFoundException;
+use Doctolib\Model\Agenda;
 use Doctolib\Model\Appointment;
 use Doctolib\Model\Availability;
 use Doctolib\Model\Booking;
@@ -15,6 +16,7 @@ use Doctolib\Model\Profile;
 use Doctolib\Model\Slot;
 use Doctolib\Model\Speciality;
 use Doctolib\Model\Step;
+use Doctolib\Model\VisitMotive;
 use Doctolib\SerializerFactory;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -197,6 +199,46 @@ class ClientTest extends TestCase
         $agenda = FixtureGenerator::createAgenda();
 
         $client->getAvailabilities([$agenda], $testDate, 1); // 1 is not valid
+    }
+
+    public function testGetAvailabilitiesWillFilterAgendasBeforeCallingHttpClient(): void
+    {
+        $testDate = new \DateTime('2021-05-21');
+        $response = $this->prophesize(ResponseInterface::class);
+        $response->getHeaders(false)->willReturn(['content-type' => ['application/json']]);
+        $response->toArray()->willReturn(['availabilities' => []]);
+
+        $httpClient = $this->prophesize(HttpClientInterface::class);
+        $httpClient->request('GET', '/availabilities.json', [
+            'base_uri' => 'https://www.doctolib.fr',
+            'query' => [
+                'start_date' => $testDate->format('Y-m-d'),
+                'visit_motive_ids' => implode('-', [471266]),
+                'agenda_ids' => implode('-', [78520]),
+                'limit' => 20,
+            ],
+        ])->shouldBeCalledOnce()->willReturn($response->reveal());
+
+        $client = new Client($httpClient->reveal(), $this->serializer);
+
+        $agendas = [
+            FixtureGenerator::createAgenda(),
+            new Agenda( // adding an agenda not matching refVisitMotiveId
+                78521,
+                [
+                    new VisitMotive(9999,
+                        'Foobar',
+                        9998,
+                        new Speciality(1, 'Foo Speciality', 'foo'),
+                        true,
+                        9997,
+                        null
+                    ),
+                ]
+            ),
+        ];
+
+        $client->getAvailabilities($agendas, $testDate, 436);
     }
 
     public function testGetAvailabilitiesReturnNextSlotDate(): void
