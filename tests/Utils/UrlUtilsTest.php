@@ -9,7 +9,7 @@ use Monolog\Test\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \Doctolib\Utils\UrlUtils
  */
 class UrlUtilsTest extends TestCase
 {
