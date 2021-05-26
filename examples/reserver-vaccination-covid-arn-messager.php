@@ -23,8 +23,6 @@ $visitMotiveIds = [
     7005, // "1re injection vaccin COVID-19 (Moderna)"
 ];
 
-// https://www.doctolib.fr/vaccination-covid-19/75009-paris?ref_visit_motive_ids[]=6970&ref_visit_motive_ids[]=7005
-
 $profiles = $client->searchProfilesBySpecialityAndLocation(
     'vaccination-covid-19',
     '75009-paris',

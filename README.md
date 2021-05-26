@@ -11,7 +11,7 @@
 This is a PHP client for [Doctolib](https://www.doctolib.fr/). It includes the following:
 
 * Helper methods for REST endpoints:
-  * Search Profiles (Doctor) by Speciality and Location, and get Booking and Availability informations.
+  * Search Profiles (Doctor) by Speciality and Location, and get Booking and Availability information.
   * Get Patient, Profile, Appointment.
   * Create, Confirm, Delete an Appointment.
   * ~~Authentication.~~ *broken*
@@ -40,7 +40,7 @@ $doctolib = new Doctolib\Client(
 $searchResults = $doctolib->search('dentiste');
 $speciality = $searchResults['specialities'][0];
 
-$profiles = $doctolib->searchProfilesBySpecialityAndLocation('dentiste', '75009-paris');
+$profiles = $doctolib->searchProfilesBySpecialityAndLocation('dentiste', '75009-paris'); // = https://www.doctolib.fr/dentiste/75009-paris
 $profiles = $doctolib->searchProfilesBySpecialityAndLocation('dentiste', '75009-paris', [
     'latitude' => 48.8785328,
     'longitude' => 2.3377854,
@@ -88,6 +88,8 @@ Add this block in your `services.yaml` file to register the `Client` as a servic
 ## Examples
 
 You can find some examples in the [examples](examples) directory.
+
+You can also check this project [julienbornstein/doctolib-autobooking](https://github.com/julienbornstein/doctolib-autobooking)
 
 ## Testing
 

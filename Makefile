@@ -1,4 +1,4 @@
-.PHONY: tests format install update upgrade post-release rollup-files rollup-db configure stop up up-recreate
+.PHONY: tests format
 .DEFAULT_GOAL= help
 
 help:
