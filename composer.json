@@ -19,7 +19,7 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "symfony/http-client": "5.2.*",
+        "symfony/http-client": "^5.2",
         "symfony/http-foundation": "^5.2",
         "symfony/options-resolver": "^5.2",
         "symfony/serializer-pack": "^1.0",
